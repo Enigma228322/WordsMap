@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libcount_words_lib.a CMakeFiles/count_words_lib.dir/WordsCountService/WordsCountServiceImpl.cc.o CMakeFiles/count_words_lib.dir/main.cc.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libcount_words_lib.a
