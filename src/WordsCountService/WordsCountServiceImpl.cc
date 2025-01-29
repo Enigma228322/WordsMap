@@ -37,7 +37,7 @@ void WordsCountServiceImpl::write_result() {
         return a.second > b.second;
     });
     for (const auto& [k, v] : temporary_vector) {
-        out << k << ' ' << v << '\n';
+        out << v << ' ' << k << '\n';
     }
     out.close();
 }

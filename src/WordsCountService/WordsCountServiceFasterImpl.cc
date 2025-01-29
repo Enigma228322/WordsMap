@@ -84,7 +84,7 @@ void WordsCountServiceFasterImpl::write_result() {
     std::string serializedData;
     serializedData.reserve(resultSerializedFileSize);
     for (const auto& pair : temporary_vector) {
-        serializedData += pair.first + " " + std::to_string(pair.second) + "\n";
+        serializedData += std::to_string(pair.second) + " " + pair.first + "\n";
     }
 
     size_t dataSize = serializedData.size();

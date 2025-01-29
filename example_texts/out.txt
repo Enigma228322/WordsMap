@@ -1,4 +1,4 @@
-asd 9
-bds 9
-fds 4
-fd 2
+9 asd
+9 bds
+4 fds
+2 fd

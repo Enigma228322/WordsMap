@@ -9,7 +9,7 @@ class WordsCountServiceTest : public ::testing::Test{
 public:
 	const std::string IN_FILENAME = "in.txt";
 	const std::string OUT_FILENAME = "out.txt";
-	const std::string EXPECTED_RESULT = "asd 9\nbds 9\nfds 4\nfd 2\n";
+	const std::string EXPECTED_RESULT = "9 asd\n9 bds\n4 fds\n2 fd\n";
 
 protected:
     WordsCountServiceTest() {
