@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
     }
 
     std::unique_ptr<wordscount::WordsCountService> wordsCountServiceInstance =
-      std::make_unique<wordscount::WordsCountServiceFasterImpl>(argv[1], argv[2]);
+      std::make_unique<wordscount::WordsCountServiceMultithreadImpl>(argv[1], argv[2]);
     spdlog::info("Created WordsCountService");
 
     if (wordsCountServiceInstance->count_words()) {

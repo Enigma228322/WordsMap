@@ -8,7 +8,7 @@
 
 *How to run tests*
 
-`./build/tests/freq_tst`
+`./build/tests/freqg_tst`
 
 *Task*
 
