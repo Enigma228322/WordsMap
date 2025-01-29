@@ -1,4 +1,6 @@
 #include "WordsCountService/WordsCountServiceImpl.hh"
+#include "WordsCountService/WordsCountServiceFasterImpl.hh"
+#include "WordsCountService/WordsCountServiceMultithreadImpl.hh"
 #include <cstdio>
 
 #include <gtest/gtest.h>
@@ -7,6 +9,7 @@ class WordsCountServiceTest : public ::testing::Test{
 public:
 	const std::string IN_FILENAME = "in.txt";
 	const std::string OUT_FILENAME = "out.txt";
+	const std::string EXPECTED_RESULT = "asd 9\nbds 9\nfds 4\nfd 2\n";
 
 protected:
     WordsCountServiceTest() {
@@ -36,10 +39,9 @@ TEST_F(WordsCountServiceTest, count_words)
 	wordsCountService.count_words();
 	wordsCountService.write_result();
 
-	std::string expected_result = "asd 9\nbds 9\nfds 4\nfd 2\n";
 	std::ifstream in(WordsCountServiceTest::OUT_FILENAME);
 	std::string result_string;
-	result_string.reserve(expected_result.size());
+	result_string.reserve(WordsCountServiceTest::EXPECTED_RESULT.size());
 	{
 		std::ifstream in(WordsCountServiceTest::OUT_FILENAME);
 		while (!in.eof()) {
@@ -52,7 +54,61 @@ TEST_F(WordsCountServiceTest, count_words)
 		}
 	}
 
-	EXPECT_EQ(result_string, expected_result);
+	EXPECT_EQ(result_string, WordsCountServiceTest::EXPECTED_RESULT);
+}
+
+TEST_F(WordsCountServiceTest, count_words_faster)
+{
+	wordscount::WordsCountServiceFasterImpl wordsCountService(
+		WordsCountServiceTest::IN_FILENAME.c_str(),
+		WordsCountServiceTest::OUT_FILENAME.c_str()
+	);
+	wordsCountService.count_words();
+	wordsCountService.write_result();
+
+	std::ifstream in(WordsCountServiceTest::OUT_FILENAME);
+	std::string result_string;
+	result_string.reserve(WordsCountServiceTest::EXPECTED_RESULT.size());
+	{
+		std::ifstream in(WordsCountServiceTest::OUT_FILENAME);
+		while (!in.eof()) {
+			std::string word;
+			std::string num;
+			in >> word >> num;
+			if (word.size() > 0 || num.size() > 0) {
+				result_string += word + " " + num + '\n';
+			}
+		}
+	}
+
+	EXPECT_EQ(result_string, WordsCountServiceTest::EXPECTED_RESULT);
+}
+
+TEST_F(WordsCountServiceTest, count_words_multithreaded)
+{
+	wordscount::WordsCountServiceMultithreadImpl wordsCountService(
+		WordsCountServiceTest::IN_FILENAME.c_str(),
+		WordsCountServiceTest::OUT_FILENAME.c_str()
+	);
+	wordsCountService.count_words();
+	wordsCountService.write_result();
+
+	std::ifstream in(WordsCountServiceTest::OUT_FILENAME);
+	std::string result_string;
+	result_string.reserve(WordsCountServiceTest::EXPECTED_RESULT.size());
+	{
+		std::ifstream in(WordsCountServiceTest::OUT_FILENAME);
+		while (!in.eof()) {
+			std::string word;
+			std::string num;
+			in >> word >> num;
+			if (word.size() > 0 || num.size() > 0) {
+				result_string += word + " " + num + '\n';
+			}
+		}
+	}
+
+	EXPECT_EQ(result_string, WordsCountServiceTest::EXPECTED_RESULT);
 }
 }; // namespace
 
