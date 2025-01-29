@@ -3,11 +3,18 @@
 
 #include "WordsCountService/WordsCountServiceImpl.hh"
 
+namespace {
+bool isSpace(char c) {
+    return c < 65 || (c > 90 && c < 97) || c > 122;
+}
+}; // namespace
+
+
 namespace wordscount {
 
-WordsCountServiceImpl::WordsCountServiceImpl(const char* inFilename, const char* outFilename):
-in(std::ifstream(inFilename)), out(std::ofstream(outFilename)) {
-    wordsMap.reserve(MAX_UNIQUE_WORDS);
+WordsCountServiceImpl::WordsCountServiceImpl(const char* in_filename, const char* out_filename):
+in(std::ifstream(in_filename)), out(std::ofstream(out_filename)) {
+    words_map.reserve(MAX_UNIQUE_WORDS);
 };
 
 int WordsCountServiceImpl::count_words() {
@@ -20,18 +27,20 @@ int WordsCountServiceImpl::count_words() {
     uint32_t word_len = 0;
     for (auto it = buffer.begin(); it != buffer.end(); ++it) {
         *it = std::tolower(*it);
-        if (*it != ' ') ++word_len;
+        if (!isSpace(*it)) {
+            ++word_len;
+        }
         else {
-            ++wordsMap[std::string(it - word_len, it)];
+            ++words_map[std::string(it - word_len, it)];
             word_len = 0;
         }
     }
-    ++wordsMap[std::string(buffer.end() - word_len, buffer.end())];
+    ++words_map[std::string(buffer.end() - word_len, buffer.end())];
     return 0;
 }
 
 void WordsCountServiceImpl::write_result() {
-    std::vector<std::pair<std::string, uint32_t>> temporary_vector(wordsMap.begin(), wordsMap.end());
+    std::vector<std::pair<std::string, uint32_t>> temporary_vector(words_map.begin(), words_map.end());
     std::sort(temporary_vector.begin(), temporary_vector.end(), [](std::pair<std::string, uint32_t>& a, std::pair<std::string, uint32_t>& b) {
         if (a.second == b.second) return a.first < b.first;
         return a.second > b.second;

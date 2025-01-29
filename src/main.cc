@@ -10,16 +10,16 @@ int main(int argc, char** argv) {
       return 1;
     }
 
-    std::unique_ptr<wordscount::WordsCountService> wordsCountServiceInstance =
+    std::unique_ptr<wordscount::WordsCountService> words_count_service_instance =
       std::make_unique<wordscount::WordsCountServiceMultithreadImpl>(argv[1], argv[2]);
     spdlog::info("Created WordsCountService");
 
-    if (wordsCountServiceInstance->count_words()) {
+    if (words_count_service_instance->count_words()) {
       return 1;
     }
     spdlog::info("Calculated words map");
 
-    wordsCountServiceInstance->write_result();
+    words_count_service_instance->write_result();
     spdlog::info("Wrote the result to a file");
 
     return 0;
