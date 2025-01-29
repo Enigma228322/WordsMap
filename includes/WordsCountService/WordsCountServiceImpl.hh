@@ -11,7 +11,7 @@ class WordsCountServiceImpl : public WordsCountService {
 const int MAX_UNIQUE_WORDS = 1e3;
 
 public:
-    WordsCountServiceImpl(const char* in_filename, const char* out_filename);
+    WordsCountServiceImpl(const char* inFilename, const char* outFilename);
 
     int count_words() override;
 
@@ -22,7 +22,7 @@ public:
 private:
     std::ifstream in;
     std::ofstream out;
-    std::unordered_map<std::string, uint32_t> words_map;
+    std::unordered_map<std::string, uint32_t> wordsMap;
     std::string buffer;
 };
 
