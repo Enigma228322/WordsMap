@@ -4,11 +4,11 @@
 
 *How to run*
 
-`./build/src/count_words_run example_texts/in_10.txt out.txt`
+`./build/src/freq example_texts/in.txt out.txt`
 
 *How to run tests*
 
-`./build/tests/count_words_tst`
+`./build/tests/freq_tst`
 
 *Task*
 
